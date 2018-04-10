@@ -75,31 +75,31 @@ int mp_is_square(mp_int *arg,int *ret)
      return res;
   }
   if ((res = mp_mod(arg,&t,&t)) != MP_OKAY) {
-     goto ERR;
+     goto ERR_;
   }
   r = mp_get_int(&t);
   /* Check for other prime modules, note it's not an ERROR but we must
-   * free "t" so the easiest way is to goto ERR.  We know that res
+   * free "t" so the easiest way is to goto ERR_.  We know that res
    * is already equal to MP_OKAY from the mp_mod call 
    */ 
-  if (((1L<<(r%11)) & 0x5C4L) != 0L)       goto ERR;
-  if (((1L<<(r%13)) & 0x9E4L) != 0L)       goto ERR;
-  if (((1L<<(r%17)) & 0x5CE8L) != 0L)      goto ERR;
-  if (((1L<<(r%19)) & 0x4F50CL) != 0L)     goto ERR;
-  if (((1L<<(r%23)) & 0x7ACCA0L) != 0L)    goto ERR;
-  if (((1L<<(r%29)) & 0xC2EDD0CL) != 0L)   goto ERR;
-  if (((1L<<(r%31)) & 0x6DE2B848L) != 0L)  goto ERR;
+  if (((1L<<(r%11)) & 0x5C4L) != 0L)       goto ERR_;
+  if (((1L<<(r%13)) & 0x9E4L) != 0L)       goto ERR_;
+  if (((1L<<(r%17)) & 0x5CE8L) != 0L)      goto ERR_;
+  if (((1L<<(r%19)) & 0x4F50CL) != 0L)     goto ERR_;
+  if (((1L<<(r%23)) & 0x7ACCA0L) != 0L)    goto ERR_;
+  if (((1L<<(r%29)) & 0xC2EDD0CL) != 0L)   goto ERR_;
+  if (((1L<<(r%31)) & 0x6DE2B848L) != 0L)  goto ERR_;
 
   /* Final check - is sqr(sqrt(arg)) == arg ? */
   if ((res = mp_sqrt(arg,&t)) != MP_OKAY) {
-     goto ERR;
+     goto ERR_;
   }
   if ((res = mp_sqr(&t,&t)) != MP_OKAY) {
-     goto ERR;
+     goto ERR_;
   }
 
   *ret = (mp_cmp_mag(&t,arg) == MP_EQ) ? MP_YES : MP_NO;
-ERR:mp_clear(&t);
+ERR_:mp_clear(&t);
   return res;
 }
 #endif
