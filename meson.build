@@ -133,5 +133,14 @@ sources =[
 ]
 
 
-static_library('tommath', sources : sources)
+lib = static_library('tommath', sources : sources)
 
+inc_dir = include_directories('.')
+
+libtommath_dep = declare_dependency(
+  link_with: lib,
+  include_directories: inc_dir
+)
+
+# Export the dependency variable for use in the root project
+libtommath_dep
